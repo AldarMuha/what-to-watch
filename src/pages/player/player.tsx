@@ -9,7 +9,7 @@ function Player(): JSX.Element {
         <div className="player__controls-row">
           <div className="player__time">
             <progress className="player__progress" value={30} max={100} />
-            <div className="player__toggler" style={{ left: "30%" }}>
+            <div className="player__toggler" style={{ left: '30%' }}>
               Toggler
             </div>
           </div>

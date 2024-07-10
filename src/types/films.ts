@@ -1,5 +1,5 @@
 export type FilmInfo = {
-  name: string,
-  genre: string,
-  year: number,
+  name: string;
+  genre: string;
+  year: number;
 }
