@@ -1,12 +1,11 @@
-import Card from '../../components/card/card';
+import CardList from '../../components/card-list/card-list';
 import { FilmInfo } from '../../types/films';
 
 type MainProps = {
-  film: FilmInfo;
+  films: FilmInfo[];
 }
 
-function Main({ film }: MainProps): JSX.Element {
-  const { name, genre, year } = film;
+function Main({ films }: MainProps): JSX.Element {
   return (
     <>
       <section className="film-card">
@@ -52,10 +51,10 @@ function Main({ film }: MainProps): JSX.Element {
               />
             </div>
             <div className="film-card__desc">
-              <h2 className="film-card__title">{name}</h2>
+              <h2 className="film-card__title">Matrix</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{genre}</span>
-                <span className="film-card__year">{year}</span>
+                <span className="film-card__genre">Fantastic</span>
+                <span className="film-card__year">1999</span>
               </p>
               <div className="film-card__buttons">
                 <button className="btn btn--play film-card__button" type="button">
@@ -130,9 +129,7 @@ function Main({ film }: MainProps): JSX.Element {
               </a>
             </li>
           </ul>
-          <div className="catalog__films-list">
-            {Array.from({ length: 12 }, () => <Card />)}
-          </div>
+          <CardList films={films} />
           <div className="catalog__more">
             <button className="catalog__button" type="button">
               Show more
