@@ -9,16 +9,20 @@ type CardListProps = {
 
 function CardList({ films }: CardListProps): JSX.Element {
   const [activeCard, setActiveCard] = useState<number | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
   const handleCardMouseMove = (id: number) => {
     setActiveCard(id);
+    setIsPlaying(!isPlaying);
   };
   const handleCardMouseLeave = () => {
     setActiveCard(null);
+    setIsPlaying(!isPlaying);
   };
+
   return (
     <div className="catalog__films-list">
       {films.map((film) => (
-        <Card key={film.id} {...film} activeCard={activeCard} onMouseMove={handleCardMouseMove} onMouseLeave={handleCardMouseLeave} />
+        <Card key={film.id} {...film} isPlaying={film.id === activeCard} onMouseMove={handleCardMouseMove} onMouseLeave={handleCardMouseLeave} />
       ))}
     </div>
   );
