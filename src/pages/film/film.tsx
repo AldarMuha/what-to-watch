@@ -1,4 +1,20 @@
-function Film(): JSX.Element {
+import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { FilmInfo } from '../../types/films';
+import NotFound from '../not-found/not-found';
+import { AppRoute } from '../../const';
+
+type FilmProps = {
+  films: FilmInfo[];
+}
+
+function Film({ films }: FilmProps): JSX.Element {
+  const { id } = useParams();
+  const film = films.find((filmItem) => String(filmItem.id) === id);
+  if (film === undefined) {
+    return <NotFound />;
+  }
+  const { name, genre, relased } = film;
   return (
     <>
       <section className="film-card film-card--full">
@@ -36,10 +52,10 @@ function Film(): JSX.Element {
           </header>
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">The Grand Budapest Hotel</h2>
+              <h2 className="film-card__title">{name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">Drama</span>
-                <span className="film-card__year">2014</span>
+                <span className="film-card__genre">{genre}</span>
+                <span className="film-card__year">{relased}</span>
               </p>
               <div className="film-card__buttons">
                 <button className="btn btn--play film-card__button" type="button">
@@ -54,9 +70,7 @@ function Film(): JSX.Element {
                   </svg>
                   <span>My list</span>
                 </button>
-                <a href="add-review.html" className="btn film-card__button">
-                  Add review
-                </a>
+                <Link className="btn film-card__button" to={`${AppRoute.Films}/${String(id)}/review`}>Add review</Link>
               </div>
             </div>
           </div>

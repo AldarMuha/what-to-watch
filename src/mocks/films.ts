@@ -44,7 +44,7 @@ export const films: FilmInfo[] = [
     isFavorite: false,
   },
   {
-    id: 2,
+    id: 3,
     name: 'Bohemian Rhapsody',
     posterImage: 'img/bohemian-rhapsody-poster.jpg',
     previewImage: 'img/bohemian-rhapsody.jpg',
@@ -65,7 +65,7 @@ export const films: FilmInfo[] = [
     isFavorite: false,
   },
   {
-    id: 3,
+    id: 4,
     name: 'Macbeth',
     posterImage: 'img/macbeth-poster.jpg',
     previewImage: 'img/macbeth.jpg',
@@ -86,7 +86,7 @@ export const films: FilmInfo[] = [
     isFavorite: false,
   },
   {
-    id: 4,
+    id: 5,
     name: 'Aviator',
     posterImage: 'img/aviator-poster.jpg',
     previewImage: 'img/aviator.jpg',
@@ -107,7 +107,7 @@ export const films: FilmInfo[] = [
     isFavorite: false,
   },
   {
-    id: 5,
+    id: 6,
     name: 'Aviator',
     posterImage: 'img/aviator-poster.jpg',
     previewImage: 'img/aviator.jpg',
@@ -128,7 +128,7 @@ export const films: FilmInfo[] = [
     isFavorite: false,
   },
   {
-    id: 6,
+    id: 7,
     name: 'We need to talk about Kevin',
     posterImage: 'img/we-need-to-talk-about-kevin-poster.jpg',
     previewImage: 'img/we-need-to-talk-about-kevin.jpg',
@@ -149,7 +149,7 @@ export const films: FilmInfo[] = [
     isFavorite: false,
   },
   {
-    id: 7,
+    id: 8,
     name: 'What We Do in the Shadows',
     posterImage: 'img/what-we-do-in-the-shadows-poster.jpg',
     previewImage: 'img/what-we-do-in-the-shadows.jpg',
@@ -170,7 +170,7 @@ export const films: FilmInfo[] = [
     isFavorite: false,
   },
   {
-    id: 8,
+    id: 9,
     name: 'Revenant',
     posterImage: 'img/revenant-poster.jpg',
     previewImage: 'img/revenant.jpg',

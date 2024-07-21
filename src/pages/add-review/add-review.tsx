@@ -1,6 +1,19 @@
+import { useParams } from 'react-router-dom';
 import Form from '../../components/form/form';
+import { FilmInfo } from '../../types/films';
+import NotFound from '../not-found/not-found';
 
-function AddReview(): JSX.Element {
+type AddReviewProps = {
+  films: FilmInfo[];
+}
+
+function AddReview({ films }: AddReviewProps): JSX.Element {
+  const { id } = useParams();
+  const film = films.find((filmItem) => String(filmItem.id) === id);
+  if (film === undefined) {
+    return <NotFound />;
+  }
+  const { name } = film;
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
@@ -23,7 +36,7 @@ function AddReview(): JSX.Element {
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
                 <a href="film-page.html" className="breadcrumbs__link">
-                  The Grand Budapest Hotel
+                  {name}
                 </a>
               </li>
               <li className="breadcrumbs__item">

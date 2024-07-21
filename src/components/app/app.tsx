@@ -30,8 +30,8 @@ function App({ films }: AppProps): JSX.Element {
             </PrivateRoute>
           }
         />
-        <Route path={`${AppRoute.Films}/:id`} element={<Film />} />
-        <Route path={`${AppRoute.Films}/:id/review`} element={<AddReview />} />
+        <Route path={`${AppRoute.Films}/:id`} element={<Film films={films} />} />
+        <Route path={`${AppRoute.Films}/:id/review`} element={<AddReview films={films} />} />
         <Route path={`${AppRoute.Player}/:id`} element={<Player />} />
 
         <Route path="*" element={<NotFound />} />
