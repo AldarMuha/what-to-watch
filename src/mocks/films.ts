@@ -60,7 +60,7 @@ export const films: FilmInfo[] = [
       'Bill Murray'
     ],
     runTime: 99,
-    genre: 'Fantatic',
+    genre: 'Drama',
     relased: 2000,
     isFavorite: false,
   },
@@ -81,7 +81,7 @@ export const films: FilmInfo[] = [
       'Bill Murray'
     ],
     runTime: 99,
-    genre: 'Fantatic',
+    genre: 'Drama',
     relased: 2020,
     isFavorite: false,
   },
@@ -102,7 +102,7 @@ export const films: FilmInfo[] = [
       'Bill Murray'
     ],
     runTime: 99,
-    genre: 'Fantatic',
+    genre: 'Drama',
     relased: 1990,
     isFavorite: false,
   },
@@ -123,7 +123,7 @@ export const films: FilmInfo[] = [
       'Bill Murray'
     ],
     runTime: 99,
-    genre: 'Fantatic',
+    genre: 'Drama',
     relased: 1994,
     isFavorite: false,
   },
