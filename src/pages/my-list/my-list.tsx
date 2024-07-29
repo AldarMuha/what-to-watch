@@ -1,12 +1,8 @@
 import CardList from '../../components/card-list/card-list';
-import { FilmInfo } from '../../types/films';
+//import { useAppSelector } from '../../hooks';
 
-type MyListProps = {
-  films: FilmInfo[];
-}
-
-function MyList({ films }: MyListProps): JSX.Element {
-  const favoritesFilms = films.filter((film) => film.isFavorite);
+function MyList(): JSX.Element {
+  // const favoritesFilms = useAppSelector((state)=>state.films.filter((film) => film.isFavorite));
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -31,7 +27,7 @@ function MyList({ films }: MyListProps): JSX.Element {
       </header>
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <CardList films={favoritesFilms} />
+        <CardList />
       </section>
       <footer className="page-footer">
         <div className="logo">

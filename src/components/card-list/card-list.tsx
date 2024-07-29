@@ -1,13 +1,10 @@
 //import { useState } from 'react';
 
 import Card from '../card/card';
-import { FilmInfo } from '../../types/films';
+import { useAppSelector } from '../../hooks';
 
-type CardListProps = {
-  films: FilmInfo[];
-}
-
-function CardList({ films }: CardListProps): JSX.Element {
+function CardList(): JSX.Element {
+  const films = useAppSelector((state) => state.films);
   /*
   const [activeCard, setActiveCard] = useState<number | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);

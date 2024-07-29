@@ -1,11 +1,16 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-
-import type { FilmInfo } from '../../types/films';
 import VideoPlayer from '../video-player/video-player';
 
-function Card({ id, name, previewVideoLink, previewImage }: FilmInfo): JSX.Element {
+type CardType = {
+  id: number;
+  name: string;
+  previewVideoLink: string;
+  previewImage: string;
+}
+
+function Card({ id, name, previewVideoLink, previewImage }: CardType): JSX.Element {
   const [isPlaying, setIsPlaying] = useState(false);
   const handleCardMouseEnter = () => {
     setIsPlaying(true);
