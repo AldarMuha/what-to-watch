@@ -1,7 +1,15 @@
+//import { useRef } from 'react';
 import CardList from '../../components/card-list/card-list';
 import GenresList from '../../components/genres-list/genres-list';
+//import { useAppSelector } from '../../hooks';
+import ShowMoreButton from '../../components/show-more-button/show-more-button';
 
 function Main(): JSX.Element {
+  //const films = useAppSelector((state) => state.films);
+  //const moreButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  //const isActiveButton: boolean = films.length % 8 > 0;
+
   return (
     <>
       <section className="film-card">
@@ -76,9 +84,7 @@ function Main(): JSX.Element {
           <GenresList />
           <CardList />
           <div className="catalog__more">
-            <button className="catalog__button" type="button">
-              Show more
-            </button>
+            <ShowMoreButton />
           </div>
         </section>
         <footer className="page-footer">

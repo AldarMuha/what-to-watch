@@ -15,9 +15,7 @@ function VideoPlayer({ previewVideoLink, previewImage, isPlaying }: VideoPlayerP
     if (videoRef.current === null) {
       return;
     }
-
     videoRef.current.addEventListener('loadeddata', () => setIsLoading(false));
-
     if (isPlaying) {
       videoRef.current.play();
       return;
