@@ -1,17 +1,14 @@
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { FilmInfo } from '../../types/films';
 import NotFound from '../not-found/not-found';
 import { AppRoute } from '../../const';
 import Tabs from '../../components/tabs/tabs';
 import Card from '../../components/card/card';
+import { useAppSelector } from '../../hooks';
 
-type FilmProps = {
-  films: FilmInfo[];
-}
-
-function Film({ films }: FilmProps): JSX.Element {
+function Film(): JSX.Element {
   const { id } = useParams();
+  const films = useAppSelector((state) => state.films);
   const film = films.find((filmItem) => String(filmItem.id) === id);
   if (film === undefined) {
     return <NotFound />;

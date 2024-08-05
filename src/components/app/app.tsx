@@ -11,13 +11,7 @@ import AddReview from '../../pages/add-review/add-review';
 import NotFound from '../../pages/not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
 
-import { FilmInfo } from '../../types/films';
-
-type AppProps = {
-  films: FilmInfo[];
-}
-
-function App({ films }: AppProps): JSX.Element {
+function App(): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -30,8 +24,8 @@ function App({ films }: AppProps): JSX.Element {
             </PrivateRoute>
           }
         />
-        <Route path={`${AppRoute.Films}/:id`} element={<Film films={films} />} />
-        <Route path={`${AppRoute.Films}/:id/review`} element={<AddReview films={films} />} />
+        <Route path={`${AppRoute.Films}/:id`} element={<Film />} />
+        <Route path={`${AppRoute.Films}/:id/review`} element={<AddReview />} />
         <Route path={`${AppRoute.Player}/:id`} element={<Player />} />
 
         <Route path="*" element={<NotFound />} />
