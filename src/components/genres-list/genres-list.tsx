@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setGenre, getFilmsByType, getFilmsShown } from '../../store/action';
+import { setGenre } from '../../store/action';
 import Genre from '../genre-item/genre-item';
 
 const genres = {
@@ -20,12 +20,10 @@ function GenresList(): JSX.Element {
   const newGenres = Object.entries(genres);
   const dispatch = useAppDispatch();
   const activeGenre = useAppSelector((state) => state.genre);
-  //const films = useAppSelector((state) => state.filmsByType);
   const handleClick = (genre: string) => {
-    //dispatch(resetFilms());
-    dispatch(setGenre(genre));
-    dispatch(getFilmsByType(genre));
-    dispatch(getFilmsShown(8));
+    if (genre !== activeGenre) {
+      dispatch(setGenre(genre));
+    }
   };
   return (
     <ul className="catalog__genres-list">

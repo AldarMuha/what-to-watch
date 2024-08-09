@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { reducer } from './reducer';
 import { createApi } from '../services/api';
+import { fetchFilms } from './action';
 
-export const api = createApi();
-export const store = configureStore({
+const api = createApi();
+const store = configureStore({
   reducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -12,3 +13,7 @@ export const store = configureStore({
       },
     }),
 });
+
+store.dispatch(fetchFilms());
+
+export default store;
