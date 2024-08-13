@@ -1,7 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { reducer } from './reducer';
 import { createApi } from '../services/api';
-import { fetchFilms } from './action';
+import { fetchFilms, fetchUserStatus } from './action';
+import { history } from '../components/history/history';
 
 const api = createApi();
 const store = configureStore({
@@ -9,11 +10,15 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       thunk: {
-        extraArgument: api,
+        extraArgument: {
+          api,
+          history
+        }
       },
     }),
 });
 
+store.dispatch(fetchUserStatus());
 store.dispatch(fetchFilms());
 
 export default store;

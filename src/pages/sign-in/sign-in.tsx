@@ -1,4 +1,20 @@
+import type { FormEvent } from 'react';
+import type { UserAuth } from '../../types/types';
+
+import { useAppDispatch } from '../../hooks';
+import { loginUser } from '../../store/action';
+
 function SignIn(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form) as Iterable<[UserAuth]>;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const data = Object.fromEntries(formData);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    dispatch(loginUser(data));
+  };
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -12,7 +28,7 @@ function SignIn(): JSX.Element {
         <h1 className="page-title user-page__title">Sign in</h1>
       </header>
       <div className="sign-in user-page__content">
-        <form action="#" className="sign-in__form">
+        <form action="#" className="sign-in__form" onSubmit={handleFormSubmit}>
           <div className="sign-in__fields">
             <div className="sign-in__field">
               <input
