@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { setGenre, setFilmsShown, fetchFilms, setIsActive, fetchUserStatus, loginUser, requireAuthorization } from './action';
+import { setGenre, setFilmsShown, fetchFilms, setIsActive, fetchUserStatus, loginUser } from './action';
 import { FilmInfo } from '../types/films';
 import { AuthorizationStatus } from '../const';
 import { User } from '../types/types';
@@ -72,8 +72,5 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(loginUser.fulfilled, (state, action) => {
       state.user = action.payload;
       state.authorizationStatus = AuthorizationStatus.Auth;
-    })
-    .addCase(requireAuthorization, (state, action) => {
-      state.authorizationStatus = action.payload;
     });
 });
