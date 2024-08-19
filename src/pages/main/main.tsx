@@ -1,15 +1,19 @@
-//import { useRef } from 'react';
+import { Navigate } from 'react-router-dom';
+import { useAppSelector } from '../../hooks';
+import { AppRoute } from '../../const';
+import { AuthorizationStatus } from '../../const';
 import CardList from '../../components/card-list/card-list';
 import GenresList from '../../components/genres-list/genres-list';
-//import { useAppSelector } from '../../hooks';
 import ShowMoreButton from '../../components/show-more-button/show-more-button';
+import Header from '../../components/header/header';
 
 function Main(): JSX.Element {
-  //const films = useAppSelector((state) => state.films);
-  //const moreButtonRef = useRef<HTMLButtonElement | null>(null);
-
-  //const isActiveButton: boolean = films.length % 8 > 0;
-
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const handleMyListClick = () => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      <Navigate to={AppRoute.MyList} />;
+    }
+  };
   return (
     <>
       <section className="film-card">
@@ -20,30 +24,7 @@ function Main(): JSX.Element {
           />
         </div>
         <h1 className="visually-hidden">WTW</h1>
-        <header className="page-header film-card__head">
-          <div className="logo">
-            <a className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img
-                  src="img/avatar.jpg"
-                  alt="User avatar"
-                  width={63}
-                  height={63}
-                />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
-            </li>
-          </ul>
-        </header>
+        <Header></Header>
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
@@ -67,7 +48,7 @@ function Main(): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
+                <button className="btn btn--list film-card__button" type="button" onClick={handleMyListClick}>
                   <svg viewBox="0 0 19 20" width={19} height={20}>
                     <use xlinkHref="#add" />
                   </svg>

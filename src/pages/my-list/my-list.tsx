@@ -1,11 +1,11 @@
-import CardList from '../../components/card-list/card-list';
-//import { useAppSelector } from '../../hooks';
+import Card from '../../components/card/card';
+import { useAppSelector } from '../../hooks';
 
 function MyList(): JSX.Element {
-  // const favoritesFilms = useAppSelector((state)=>state.films.filter((film) => film.isFavorite));
+  const films = useAppSelector((state) => state.films.filter((film) => film.isFavorite));
   return (
     <div className="user-page">
-      <header className="page-header user-page__head">
+      <header className="age-header user-page__head">
         <div className="logo">
           <a href="main.html" className="logo__link">
             <span className="logo__letter logo__letter--1">W</span>
@@ -27,7 +27,9 @@ function MyList(): JSX.Element {
       </header>
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <CardList />
+        {films.map((film) => (
+          <Card key={film.id} {...film} />
+        ))}
       </section>
       <footer className="page-footer">
         <div className="logo">

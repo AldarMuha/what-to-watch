@@ -1,7 +1,5 @@
-import { Route, BrowserRouter, Routes } from 'react-router-dom';
-
-import { AppRoute, AuthorizationStatus } from '../../const';
-
+import { unstable_HistoryRouter as HistoryRouter, Route, Routes } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import Main from '../../pages/main/main';
 import SignIn from '../../pages/sign-in/sign-in';
 import Player from '../../pages/player/player';
@@ -10,16 +8,17 @@ import Film from '../../pages/film/film';
 import AddReview from '../../pages/add-review/add-review';
 import NotFound from '../../pages/not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
+import history from '../../services/history';
 
 function App(): JSX.Element {
   return (
-    <BrowserRouter>
+    <HistoryRouter history={history}>
       <Routes>
         <Route path={AppRoute.Root} element={<Main />} />
         <Route path={AppRoute.Login} element={<SignIn />} />
         <Route path={AppRoute.MyList}
           element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+            <PrivateRoute>
               <MyList />
             </PrivateRoute>
           }
@@ -30,7 +29,7 @@ function App(): JSX.Element {
 
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 

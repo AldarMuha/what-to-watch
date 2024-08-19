@@ -3,8 +3,9 @@ import { useAppSelector } from '../../hooks';
 import Spinner from '../spinner/spinner';
 
 function CardList(): JSX.Element {
+  const filmsShown = useAppSelector((state) => state.filmsShown);
   const isFilmsLoading = useAppSelector((state) => state.isFilmsStateLoading);
-  const films = useAppSelector((state) => state.filmsShown);
+  const films = useAppSelector((state) => (state.filmsByType).slice(0, filmsShown));
   if (isFilmsLoading) {
     return <Spinner />;
   }
@@ -16,5 +17,4 @@ function CardList(): JSX.Element {
     </div>
   );
 }
-
 export default CardList;
