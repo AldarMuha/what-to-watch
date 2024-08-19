@@ -1,8 +1,12 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { Token } from '../components/token/token';
+import { Token } from '../utils/token';
 
 const BACKEND_URL = 'https://10.react.htmlacademy.pro/wtw';
 const REQUEST_TIMEOUT = 5000;
+
+interface Headers {
+  [key: string]: string;
+}
 
 export const createApi = (): AxiosInstance => {
   const api = axios.create({
@@ -15,7 +19,10 @@ export const createApi = (): AxiosInstance => {
       const token = Token.get();
 
       if (token) {
-        config.headers['x-token'] = token;
+        if (!config.headers) {
+          config.headers = {};
+        }
+        (config.headers as Headers)['x-token'] = token;
       }
 
       return config;

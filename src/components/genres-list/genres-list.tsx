@@ -15,7 +15,6 @@ const genres = {
   'Thrillers': 'Thriller',
 };
 
-
 function GenresList(): JSX.Element {
   const newGenres = Object.entries(genres);
   const dispatch = useAppDispatch();
@@ -31,5 +30,4 @@ function GenresList(): JSX.Element {
     </ul>
   );
 }
-
 export default GenresList;

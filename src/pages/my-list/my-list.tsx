@@ -5,7 +5,7 @@ function MyList(): JSX.Element {
   const films = useAppSelector((state) => state.films.filter((film) => film.isFavorite));
   return (
     <div className="user-page">
-      <header className="page-header user-page__head">
+      <header className="age-header user-page__head">
         <div className="logo">
           <a href="main.html" className="logo__link">
             <span className="logo__letter logo__letter--1">W</span>

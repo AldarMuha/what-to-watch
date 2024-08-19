@@ -22,5 +22,4 @@ function ShowMoreButton(): JSX.Element {
     <button className={`catalog__button${!isActive ? ' visually-hidden' : ''}`} type="button" onClick={handleClickShowMoreButton}>Show more</button>
   );
 }
-
 export default ShowMoreButton;
