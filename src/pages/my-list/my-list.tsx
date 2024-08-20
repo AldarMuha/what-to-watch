@@ -1,8 +1,13 @@
 import Card from '../../components/card/card';
 import { useAppSelector } from '../../hooks';
+import Spinner from '../../components/spinner/spinner';
 
 function MyList(): JSX.Element {
   const films = useAppSelector((state) => state.films.filter((film) => film.isFavorite));
+  const isFilmsLoading = useAppSelector((state) => state.isFilmsStateLoading);
+  if (isFilmsLoading) {
+    return <Spinner />;
+  }
   return (
     <div className="user-page">
       <header className="age-header user-page__head">

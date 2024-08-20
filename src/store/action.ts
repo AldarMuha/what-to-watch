@@ -5,6 +5,8 @@ import { AppRoute } from '../const';
 import { User, UserAuth } from '../types/types';
 import { Token } from '../utils/token';
 import { History } from 'history';
+import { AuthorizationStatus } from '../const';
+//import { State, AppDispatch } from '../types/state';
 
 type Extra = {
   api: AxiosInstance;
@@ -18,7 +20,10 @@ const Action = {
   FETCH_FILMS: 'films/fetch',
   LOGIN_USER: 'user/login',
   FETCH_USER_STATUS: 'user/fetch/status',
+  REQUIRE_AUTHORIZATION: 'user/requireAuthorization',
 };
+
+export const requireAuthorization = createAction<AuthorizationStatus>(Action.REQUIRE_AUTHORIZATION);
 
 export const setGenre = createAction<string>(Action.SET_GENRE);
 export const setFilmsShown = createAction<number>(Action.SET_FILMS_SHOWN);
@@ -53,3 +58,17 @@ export const loginUser = createAsyncThunk<UserAuth['email'], UserAuth, { extra: 
     history.back();
     return email;
   });
+/*
+export const logoutAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'user/logout',
+  async (_arg, { dispatch, extra: api }) => {
+    await api.delete(AppRoute.Logout);
+    Token.drop();
+    dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+  },
+);
+*/

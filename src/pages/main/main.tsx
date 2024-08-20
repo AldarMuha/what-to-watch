@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { AppRoute } from '../../const';
 import { AuthorizationStatus } from '../../const';
@@ -9,9 +9,13 @@ import Header from '../../components/header/header';
 
 function Main(): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const Navigate = useNavigate();
   const handleMyListClick = () => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
-      <Navigate to={AppRoute.MyList} />;
+      Navigate(AppRoute.MyList);
+    }
+    else {
+      Navigate(AppRoute.Login);
     }
   };
   return (

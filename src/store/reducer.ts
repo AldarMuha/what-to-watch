@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { setGenre, setFilmsShown, fetchFilms, setIsActive, fetchUserStatus, loginUser } from './action';
+import { setGenre, setFilmsShown, fetchFilms, setIsActive, fetchUserStatus, loginUser, requireAuthorization } from './action';
 import { FilmInfo } from '../types/films';
 import { AuthorizationStatus } from '../const';
 import { User } from '../types/types';
@@ -13,6 +13,7 @@ type State = {
   isFilmsStateLoading: boolean;
   authorizationStatus: AuthorizationStatus;
   user: User['email'];
+  isUserStatusLoading: boolean;
 }
 
 const initialState: State = {
@@ -24,6 +25,7 @@ const initialState: State = {
   isFilmsStateLoading: false,
   authorizationStatus: AuthorizationStatus.NoAuth,
   user: '',
+  isUserStatusLoading: true,
 };
 export const reducer = createReducer(initialState, (builder) => {
   builder
@@ -54,7 +56,7 @@ export const reducer = createReducer(initialState, (builder) => {
       }
     })
     .addCase(fetchFilms.rejected, (state) => {
-      state.isFilmsStateLoading = false;
+      state.isFilmsStateLoading = true;
     })
     .addCase(setFilmsShown, (state, action) => {
       state.filmsShown = action.payload;
@@ -62,15 +64,23 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(setIsActive, (state, action) => {
       state.isActiveShowMoreButton = action.payload;
     })
+    .addCase(fetchUserStatus.pending, (state) => {
+      state.isUserStatusLoading = true;
+    })
     .addCase(fetchUserStatus.fulfilled, (state, action) => {
+      state.isUserStatusLoading = false;
       state.user = action.payload.email;
       state.authorizationStatus = AuthorizationStatus.Auth;
     })
     .addCase(fetchUserStatus.rejected, (state) => {
+      state.isFilmsStateLoading = true;
       state.authorizationStatus = AuthorizationStatus.NoAuth;
     })
     .addCase(loginUser.fulfilled, (state, action) => {
       state.user = action.payload;
       state.authorizationStatus = AuthorizationStatus.Auth;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
     });
 });
