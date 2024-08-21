@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { setGenre, setFilmsShown, fetchFilms, setIsActive, fetchUserStatus, loginUser, requireAuthorization } from './action';
+import { setGenre, setFilmsShown, fetchFilms, setIsActive, fetchUserStatus, loginUser, requireAuthorization, fetchFilm } from './action';
 import { FilmInfo } from '../types/films';
 import { AuthorizationStatus } from '../const';
 import { User } from '../types/types';
@@ -14,6 +14,8 @@ type State = {
   authorizationStatus: AuthorizationStatus;
   user: User['email'];
   isUserStatusLoading: boolean;
+  film: FilmInfo | null;
+  isFilmLoading: boolean;
 }
 
 const initialState: State = {
@@ -25,7 +27,9 @@ const initialState: State = {
   isFilmsStateLoading: false,
   authorizationStatus: AuthorizationStatus.NoAuth,
   user: '',
-  isUserStatusLoading: true,
+  isUserStatusLoading: false,
+  film: null,
+  isFilmLoading: false,
 };
 export const reducer = createReducer(initialState, (builder) => {
   builder
@@ -82,5 +86,15 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
+    })
+    .addCase(fetchFilm.pending, (state) => {
+      state.isFilmLoading = true;
+    })
+    .addCase(fetchFilm.fulfilled, (state, action) => {
+      state.film = action.payload;
+      state.isFilmLoading = false;
+    })
+    .addCase(fetchFilm.rejected, (state) => {
+      state.isFilmLoading = true;
     });
 });
