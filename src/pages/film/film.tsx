@@ -1,19 +1,44 @@
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import NotFound from '../not-found/not-found';
-import { AppRoute } from '../../const';
+import { useEffect } from 'react';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import Tabs from '../../components/tabs/tabs';
 import Card from '../../components/card/card';
-import { useAppSelector } from '../../hooks';
+import { useAppSelector, useAppDispatch } from '../../hooks';
+import Spinner from '../../components/spinner/spinner';
+import { fetchFilm, fetchComments, fetchSimilarFilms } from '../../store/action';
+//import { NewComment } from '../../types/types';
 
-function Film(): JSX.Element {
-  const { id } = useParams();
-  const films = useAppSelector((state) => state.films);
-  const film = films.find((filmItem) => String(filmItem.id) === id);
-  if (film === undefined) {
-    return <NotFound />;
+function Film(): JSX.Element | null {
+  const params = useParams();
+  const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const films = useAppSelector((state) => state.similarFilms);
+  const isFilmLoading = useAppSelector((state) => state.isFilmLoading);
+  const film = useAppSelector((state) => state.film);
+  const reviews = useAppSelector((state) => state.comments);
+  useEffect(() => {
+    const { id } = params;
+    if (id) {
+      const parsedId = Number(id);
+      dispatch(fetchFilm(parsedId));
+      dispatch(fetchComments(parsedId));
+      dispatch(fetchSimilarFilms(parsedId));
+    }
+  }, [params, dispatch]);
+  if (!film) {
+    return null;
   }
-  const { name, genre, relased } = film;
+  if (isFilmLoading) {
+    return <Spinner />;
+  }
+  const { id } = film;
+  /*
+  const onFormSubmit = (FormData: Omit<NewComment, 'id'>) => {
+    dispatch(postReview({ id, ...FormData }));
+  };
+  */
+  //const { name, genre, relased } = film;
   return (
     <>
       <section className="film-card film-card--full">
@@ -51,10 +76,10 @@ function Film(): JSX.Element {
           </header>
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{name}</h2>
+              <h2 className="film-card__title">{film.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{genre}</span>
-                <span className="film-card__year">{relased}</span>
+                <span className="film-card__genre">{film.genre}</span>
+                <span className="film-card__year">{film.relased}</span>
               </p>
               <div className="film-card__buttons">
                 <button className="btn btn--play film-card__button" type="button">
@@ -69,7 +94,7 @@ function Film(): JSX.Element {
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link className="btn film-card__button" to={`${AppRoute.Films}/${String(id)}/review`}>Add review</Link>
+                <Link className={`btn film-card__button${(authorizationStatus !== AuthorizationStatus.Auth) ? ' visually-hidden' : ''}`} to={`${AppRoute.Comments}/${id}`}>Add review</Link>
               </div>
             </div>
           </div>
@@ -84,7 +109,7 @@ function Film(): JSX.Element {
                 height={327}
               />
             </div>
-            <Tabs film={film} />
+            <Tabs film={film} reviews={reviews} authorizationStatus={authorizationStatus} />
           </div>
         </div>
       </section>
@@ -92,7 +117,7 @@ function Film(): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
           <div className="catalog__films-list">
-            {films.filter((filmItem) => filmItem.genre === film.genre && filmItem.id !== film.id).map((filmItem) => (<Card key={filmItem.id} {...filmItem} />))}
+            {films.map((filmItem) => (<Card key={filmItem.id} {...filmItem} />))}
           </div>
         </section>
         <footer className="page-footer">

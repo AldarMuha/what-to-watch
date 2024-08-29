@@ -1,4 +1,4 @@
-import type { AxiosInstance } from 'axios';
+import type { AxiosError, AxiosInstance } from 'axios';
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import type { FilmInfo } from '../types/films';
 import { AppRoute } from '../const';
@@ -7,6 +7,8 @@ import { Token } from '../utils/token';
 import { History } from 'history';
 import { AuthorizationStatus } from '../const';
 //import { State, AppDispatch } from '../types/state';
+import { HttpCode } from '../const';
+import { Comment, NewComment } from '../types/types';
 
 type Extra = {
   api: AxiosInstance;
@@ -22,6 +24,9 @@ const Action = {
   LOGIN_USER: 'user/login',
   FETCH_USER_STATUS: 'user/fetch/status',
   REQUIRE_AUTHORIZATION: 'user/requireAuthorization',
+  FETCH_COMMENTS: 'film/fetch-comments',
+  SIMILAR_FILMS: 'films/similar',
+  POST_COMMENT: 'user/post-comment'
 };
 
 export const requireAuthorization = createAction<AuthorizationStatus>(Action.REQUIRE_AUTHORIZATION);
@@ -63,8 +68,43 @@ export const loginUser = createAsyncThunk<UserAuth['email'], UserAuth, { extra: 
 export const fetchFilm = createAsyncThunk<FilmInfo, FilmInfo['id'], { extra: Extra }>(
   Action.FETCH_FILM,
   async (id, { extra }) => {
-    const { api } = extra;
-    const { data } = await api.get<FilmInfo>(`${AppRoute.Films}/${id}`);
-    return data;
+    const { api, history } = extra;
+    try {
+      const { data } = await api.get<FilmInfo>(`${AppRoute.Films}/${id}`);
+      return data;
+    } catch (error) {
+      const axiosError = error as AxiosError;
+
+      if (axiosError.response?.status === HttpCode.NotFound) {
+        history.push(AppRoute.NotFound);
+      }
+      return Promise.reject(error);
+    }
   });
 
+export const fetchComments = createAsyncThunk<Comment[], FilmInfo['id'], { extra: Extra }>(
+  Action.FETCH_COMMENTS,
+  async (id, { extra }) => {
+    const { api } = extra;
+    const { data } = await api.get<Comment[]>(`${AppRoute.Comments}/${id}`);
+    return data;
+  }
+);
+
+export const fetchSimilarFilms = createAsyncThunk<FilmInfo[], FilmInfo['id'], { extra: Extra }>(
+  Action.SIMILAR_FILMS,
+  async (id, { extra }) => {
+    const { api } = extra;
+    const { data } = await api.get<FilmInfo[]>(`${AppRoute.Films}/${id}/similar`);
+    return data;
+  }
+);
+
+export const postReview = createAsyncThunk<Comment[], NewComment, { extra: Extra }>(
+  Action.POST_COMMENT,
+  async ({ id, comment, rating }, { extra }) => {
+    const { api } = extra;
+    const { data } = await api.post<Comment[]>(`${AppRoute.Comments}/${id}`, { comment, rating });
+    return data;
+  }
+);

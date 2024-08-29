@@ -24,7 +24,7 @@ function App(): JSX.Element {
           }
         />
         <Route path={`${AppRoute.Films}/:id`} element={<Film />} />
-        <Route path={`${AppRoute.Films}/:id/review`} element={<AddReview />} />
+        <Route path={`${AppRoute.Comments}/:id`} element={<AddReview />} />
         <Route path={`${AppRoute.Player}/:id`} element={<Player />} />
 
         <Route path="*" element={<NotFound />} />

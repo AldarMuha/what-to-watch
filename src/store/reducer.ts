@@ -1,8 +1,8 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { setGenre, setFilmsShown, fetchFilms, setIsActive, fetchUserStatus, loginUser, requireAuthorization, fetchFilm } from './action';
+import { setGenre, setFilmsShown, fetchFilms, setIsActive, fetchUserStatus, loginUser, requireAuthorization, fetchFilm, fetchComments, fetchSimilarFilms, postReview } from './action';
 import { FilmInfo } from '../types/films';
 import { AuthorizationStatus } from '../const';
-import { User } from '../types/types';
+import { User, Comment } from '../types/types';
 
 type State = {
   genre: string;
@@ -16,6 +16,8 @@ type State = {
   isUserStatusLoading: boolean;
   film: FilmInfo | null;
   isFilmLoading: boolean;
+  comments: Comment[];
+  similarFilms: FilmInfo[];
 }
 
 const initialState: State = {
@@ -30,6 +32,8 @@ const initialState: State = {
   isUserStatusLoading: false,
   film: null,
   isFilmLoading: false,
+  comments: [],
+  similarFilms: [],
 };
 export const reducer = createReducer(initialState, (builder) => {
   builder
@@ -96,5 +100,14 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchFilm.rejected, (state) => {
       state.isFilmLoading = true;
+    })
+    .addCase(fetchComments.fulfilled, (state, action) => {
+      state.comments = action.payload;
+    })
+    .addCase(fetchSimilarFilms.fulfilled, (state, action) => {
+      state.similarFilms = action.payload;
+    })
+    .addCase(postReview.fulfilled, (state, action) => {
+      state.comments = action.payload;
     });
 });

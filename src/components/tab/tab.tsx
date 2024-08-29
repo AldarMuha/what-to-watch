@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-
 type TabProps = {
   idTab: number;
   title: string;
@@ -10,8 +8,8 @@ type TabProps = {
 
 function Tab({ idTab, title, isActive, idFilm, onClickTab }: TabProps): JSX.Element {
   return (
-    <li className={`film-nav__item ${(isActive === idTab) ? 'film-nav__item--active' : ''}`} onClick={onClickTab}>
-      <Link className="film-nav__link" to={`/films/${idFilm}`}>{title}</Link>
+    <li className={`film-nav__item ${(isActive === idTab) ? ' film-nav__item--active' : ''}`} onClick={onClickTab}>
+      <div className="film-nav__link">{title}</div>
     </li>
   );
 }

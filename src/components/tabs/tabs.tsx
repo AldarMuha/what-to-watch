@@ -1,20 +1,24 @@
 import { useState } from 'react';
-
 import { FilmInfo } from '../../types/films';
+import { Comment } from '../../types/types';
 import Tab from '../tab/tab';
 import Overview from '../overview/overview';
 import Details from '../details/details';
 import Reviews from '../reviews/reviews';
+import { AuthorizationStatus } from '../../const';
 
 type TabsProps = {
   film: FilmInfo;
+  reviews: Comment[];
+  authorizationStatus: AuthorizationStatus;
 }
 
-function Tabs({ film }: TabsProps): JSX.Element {
+function Tabs({ film, reviews, authorizationStatus }: TabsProps): JSX.Element {
   const [isActiveTab, setIsActiveTab] = useState<number>(0);
   const handleTabClick = (idTab: number) => {
     setIsActiveTab(idTab);
   };
+
   return (
     <div className="film-card__desc">
       <nav className="film-nav film-card__nav">
@@ -26,7 +30,7 @@ function Tabs({ film }: TabsProps): JSX.Element {
       </nav>
       <Overview idTab={0} isActive={isActiveTab} film={film} />
       <Details idTab={1} isActive={isActiveTab} film={film} />
-      <Reviews idTab={2} isActive={isActiveTab} />
+      <Reviews idTab={2} isActive={isActiveTab} film={film} reviews={reviews} />
     </div >
   );
 }

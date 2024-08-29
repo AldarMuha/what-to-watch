@@ -4,7 +4,9 @@ export enum AppRoute {
   Logout = '/logout',
   MyList = '/mylist',
   Films = '/films',
-  Player = '/player'
+  Player = '/player',
+  NotFound = '/404',
+  Comments = '/comments'
 }
 
 export enum AuthorizationStatus {
@@ -14,3 +16,7 @@ export enum AuthorizationStatus {
 }
 
 export const TIMEOUT_SHOW_ERROR = 2000;
+
+export enum HttpCode {
+  NotFound = 404
+}

@@ -1,16 +1,14 @@
-import { useParams } from 'react-router-dom';
 import Form from '../../components/form/form';
-import NotFound from '../not-found/not-found';
 import { useAppSelector } from '../../hooks';
+import { useNavigate } from 'react-router-dom';
+import { AppRoute } from '../../const';
 
 function AddReview(): JSX.Element {
-  const { id } = useParams();
-  const films = useAppSelector((state) => state.films);
-  const film = films.find((filmItem) => String(filmItem.id) === id);
-  if (film === undefined) {
-    return <NotFound />;
+  const navigate = useNavigate();
+  const film = useAppSelector((state) => state.film);
+  if (!film) {
+    navigate(AppRoute.Login);
   }
-  const { name } = film;
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
@@ -33,7 +31,7 @@ function AddReview(): JSX.Element {
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
                 <a href="film-page.html" className="breadcrumbs__link">
-                  {name}
+                  {film?.name}
                 </a>
               </li>
               <li className="breadcrumbs__item">
@@ -67,7 +65,7 @@ function AddReview(): JSX.Element {
         </div>
       </div>
       <div className="add-review">
-        <Form />
+        {(!film) ? '' : <Form id={film.id} />}
       </div>
     </section>
   );
