@@ -18,7 +18,8 @@ type Extra = {
 const Action = {
   SET_GENRE: 'films/set-genre',
   SET_FILMS_SHOWN: 'films/set-shown',
-  SET_IS_ACTIVE: 'set-is-active',
+  SET_FILMS_BY_GENRE: 'films/set-by-genre',
+  SHOW_MORE_FILMS: 'films/show-more',
   FETCH_FILMS: 'films/fetch',
   FETCH_FILM: 'film/fetch',
   LOGIN_USER: 'user/login',
@@ -31,9 +32,10 @@ const Action = {
 
 export const requireAuthorization = createAction<AuthorizationStatus>(Action.REQUIRE_AUTHORIZATION);
 
-export const setGenre = createAction<string>(Action.SET_GENRE);
+//export const setGenre = createAction<string>(Action.SET_GENRE);
 export const setFilmsShown = createAction<number>(Action.SET_FILMS_SHOWN);
-export const setIsActive = createAction<boolean>(Action.SET_IS_ACTIVE);
+export const setFilmsByGenre = createAction<string>(Action.SET_FILMS_BY_GENRE);
+export const showMoreFilms = createAction(Action.SHOW_MORE_FILMS);
 
 export const fetchFilms = createAsyncThunk<FilmInfo[], undefined, { extra: Extra }>(
   Action.FETCH_FILMS,

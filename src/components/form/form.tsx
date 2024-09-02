@@ -3,7 +3,6 @@ import { Fragment, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { postReview } from '../../store/action';
 import { NewComment } from '../../types/types';
-//import { FilmInfo } from '../../types/films';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
@@ -17,7 +16,6 @@ function Form({ id }: FormProps): JSX.Element {
   const [text, setText] = useState<string>('');
   const [rating, setRating] = useState<number>(0);
   const dispatch = useAppDispatch();
-  //const { id } = film;
 
   const handleTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);

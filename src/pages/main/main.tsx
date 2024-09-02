@@ -5,10 +5,12 @@ import { AuthorizationStatus } from '../../const';
 import CardList from '../../components/card-list/card-list';
 import GenresList from '../../components/genres-list/genres-list';
 import ShowMoreButton from '../../components/show-more-button/show-more-button';
-import Header from '../../components/header/header';
+import Logo from '../../components/logo/logo';
+import UserBlock from '../../components/user-block/user-block';
+import { getAuthorizationStatus } from '../../store/user-process/selector';
 
 function Main(): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const Navigate = useNavigate();
   const handleMyListClick = () => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
@@ -28,7 +30,10 @@ function Main(): JSX.Element {
           />
         </div>
         <h1 className="visually-hidden">WTW</h1>
-        <Header></Header>
+        <header className="page-header film-card__head">
+          <Logo />
+          <UserBlock />
+        </header>
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">

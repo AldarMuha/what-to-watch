@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks';
+import { getAuthorizationStatus } from '../../store/user-process/selector';
 
 function Header(): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   return (
     <header className="page-header film-card__head">
       <div className="logo">

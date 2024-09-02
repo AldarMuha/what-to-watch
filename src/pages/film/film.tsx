@@ -7,16 +7,19 @@ import Card from '../../components/card/card';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import Spinner from '../../components/spinner/spinner';
 import { fetchFilm, fetchComments, fetchSimilarFilms } from '../../store/action';
-//import { NewComment } from '../../types/types';
+import { getAuthorizationStatus } from '../../store/user-process/selector';
+import { getComments, getFilm, getIsFilmLoading, getSimilarFilms } from '../../store/site-data/selectors';
+import Logo from '../../components/logo/logo';
+import UserBlock from '../../components/user-block/user-block';
 
 function Film(): JSX.Element | null {
   const params = useParams();
   const dispatch = useAppDispatch();
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const films = useAppSelector((state) => state.similarFilms);
-  const isFilmLoading = useAppSelector((state) => state.isFilmLoading);
-  const film = useAppSelector((state) => state.film);
-  const reviews = useAppSelector((state) => state.comments);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const films = useAppSelector(getSimilarFilms);
+  const isFilmLoading = useAppSelector(getIsFilmLoading);
+  const film = useAppSelector(getFilm);
+  const reviews = useAppSelector(getComments);
   useEffect(() => {
     const { id } = params;
     if (id) {
@@ -33,12 +36,6 @@ function Film(): JSX.Element | null {
     return <Spinner />;
   }
   const { id } = film;
-  /*
-  const onFormSubmit = (FormData: Omit<NewComment, 'id'>) => {
-    dispatch(postReview({ id, ...FormData }));
-  };
-  */
-  //const { name, genre, relased } = film;
   return (
     <>
       <section className="film-card film-card--full">
@@ -51,28 +48,8 @@ function Film(): JSX.Element | null {
           </div>
           <h1 className="visually-hidden">WTW</h1>
           <header className="page-header film-card__head">
-            <div className="logo">
-              <a href="main.html" className="logo__link">
-                <span className="logo__letter logo__letter--1">W</span>
-                <span className="logo__letter logo__letter--2">T</span>
-                <span className="logo__letter logo__letter--3">W</span>
-              </a>
-            </div>
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img
-                    src="img/avatar.jpg"
-                    alt="User avatar"
-                    width={63}
-                    height={63}
-                  />
-                </div>
-              </li>
-              <li className="user-block__item">
-                <a className="user-block__link">Sign out</a>
-              </li>
-            </ul>
+            <Logo />
+            <UserBlock />
           </header>
           <div className="film-card__wrap">
             <div className="film-card__desc">

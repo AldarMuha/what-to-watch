@@ -22,3 +22,4 @@ export type Comment = {
 }
 
 export type NewComment = Pick<Comment, 'comment' | 'rating'> & Pick<FilmInfo, 'id'>;
+

@@ -1,25 +1,18 @@
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { setFilmsShown, setIsActive } from '../../store/action';
+import { showMoreFilms } from '../../store/action';
+import { getFilmsByGenre, getFilmsShown } from '../../store/site-data/selectors';
 
 function ShowMoreButton(): JSX.Element {
-  const isActive = useAppSelector((state) => state.isActiveShowMoreButton);
-  const filmsShown = useAppSelector((state) => state.filmsShown);
-  const films = useAppSelector((state) => state.filmsByType);
   const dispatch = useAppDispatch();
-  const CARDS_PER_PORTION = 8;
-  let step = filmsShown;
+  const filmsByGenre = useAppSelector(getFilmsByGenre);
+  const filmsShown = useAppSelector(getFilmsShown);
+  const isMore = filmsShown < filmsByGenre;
+
   const handleClickShowMoreButton = () => {
-    step += CARDS_PER_PORTION;
-    if (step > films.length) {
-      dispatch(setFilmsShown(films.length));
-      dispatch(setIsActive(false));
-    } else {
-      dispatch(setFilmsShown(step));
-      dispatch(setIsActive(true));
-    }
+    dispatch(showMoreFilms());
   };
   return (
-    <button className={`catalog__button${!isActive ? ' visually-hidden' : ''}`} type="button" onClick={handleClickShowMoreButton}>Show more</button>
+    <button className={`catalog__button${!isMore ? ' visually-hidden' : ''}`} type="button" onClick={handleClickShowMoreButton}>Show more</button>
   );
 }
 export default ShowMoreButton;

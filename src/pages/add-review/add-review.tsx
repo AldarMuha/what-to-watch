@@ -2,10 +2,13 @@ import Form from '../../components/form/form';
 import { useAppSelector } from '../../hooks';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { getFilm } from '../../store/site-data/selectors';
+import Logo from '../../components/logo/logo';
+import UserBlock from '../../components/user-block/user-block';
 
 function AddReview(): JSX.Element {
   const navigate = useNavigate();
-  const film = useAppSelector((state) => state.film);
+  const film = useAppSelector(getFilm);
   if (!film) {
     navigate(AppRoute.Login);
   }
@@ -20,13 +23,7 @@ function AddReview(): JSX.Element {
         </div>
         <h1 className="visually-hidden">WTW</h1>
         <header className="page-header">
-          <div className="logo">
-            <a href="main.html" className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
+          <Logo />
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
@@ -39,21 +36,7 @@ function AddReview(): JSX.Element {
               </li>
             </ul>
           </nav>
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img
-                  src="img/avatar.jpg"
-                  alt="User avatar"
-                  width={63}
-                  height={63}
-                />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
-            </li>
-          </ul>
+          <UserBlock />
         </header>
         <div className="film-card__poster film-card__poster--small">
           <img

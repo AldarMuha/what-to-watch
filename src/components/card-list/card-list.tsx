@@ -1,11 +1,11 @@
 import Card from '../card/card';
 import { useAppSelector } from '../../hooks';
 import Spinner from '../spinner/spinner';
+import { getFilmsShown, getIsFilmsLoading } from '../../store/site-data/selectors';
 
 function CardList(): JSX.Element {
-  const filmsShown = useAppSelector((state) => state.filmsShown);
-  const isFilmsLoading = useAppSelector((state) => state.isFilmsStateLoading);
-  const films = useAppSelector((state) => (state.filmsByType).slice(0, filmsShown));
+  const isFilmsLoading = useAppSelector(getIsFilmsLoading);
+  const films = useAppSelector(getFilmsShown);
   if (isFilmsLoading) {
     return <Spinner />;
   }

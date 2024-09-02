@@ -20,3 +20,9 @@ export const TIMEOUT_SHOW_ERROR = 2000;
 export enum HttpCode {
   NotFound = 404
 }
+
+export enum StoreSlice {
+  SiteData = 'SITE_DATA',
+  SiteProcess = 'SITE_PROCESS',
+  UserProcess = 'USER_PROCESS',
+}
