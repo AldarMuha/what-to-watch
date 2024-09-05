@@ -1,14 +1,14 @@
 import Card from '../../components/card/card';
 import { useAppSelector } from '../../hooks';
 import Spinner from '../../components/spinner/spinner';
-import { getIsFilmLoading, getSimilarFilms } from '../../store/site-data/selectors';
+import { getFavoritesFilms, getIsFavoriteLoading } from '../../store/site-data/selectors';
 import Logo from '../../components/logo/logo';
 import UserBlock from '../../components/user-block/user-block';
 
 function MyList(): JSX.Element {
-  const films = useAppSelector(getSimilarFilms);
-  const isFilmsLoading = useAppSelector(getIsFilmLoading);
-  if (isFilmsLoading) {
+  const films = useAppSelector(getFavoritesFilms);
+  const isFavoriteLoading = useAppSelector(getIsFavoriteLoading);
+  if (isFavoriteLoading) {
     return <Spinner />;
   }
   return (

@@ -11,6 +11,8 @@ import { getAuthorizationStatus } from '../../store/user-process/selector';
 import { getComments, getFilm, getIsFilmLoading, getSimilarFilms } from '../../store/site-data/selectors';
 import Logo from '../../components/logo/logo';
 import UserBlock from '../../components/user-block/user-block';
+import { useNavigate } from 'react-router-dom';
+import ButtonMyList from '../../components/button-my-list/button-my-list';
 
 function Film(): JSX.Element | null {
   const params = useParams();
@@ -20,6 +22,7 @@ function Film(): JSX.Element | null {
   const isFilmLoading = useAppSelector(getIsFilmLoading);
   const film = useAppSelector(getFilm);
   const reviews = useAppSelector(getComments);
+  const navigate = useNavigate();
   useEffect(() => {
     const { id } = params;
     if (id) {
@@ -35,7 +38,7 @@ function Film(): JSX.Element | null {
   if (isFilmLoading) {
     return <Spinner />;
   }
-  const { id } = film;
+  const { id, isFavorite } = film;
   return (
     <>
       <section className="film-card film-card--full">
@@ -59,18 +62,13 @@ function Film(): JSX.Element | null {
                 <span className="film-card__year">{film.relased}</span>
               </p>
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <button className="btn btn--play film-card__button" type="button" onClick={() => navigate(`${AppRoute.Player}/${id}`)}>
                   <svg viewBox="0 0 19 19" width={19} height={19}>
                     <use xlinkHref="#play-s" />
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width={19} height={20}>
-                    <use xlinkHref="#add" />
-                  </svg>
-                  <span>My list</span>
-                </button>
+                <ButtonMyList id={id} isActive={isFavorite} />
                 <Link className={`btn film-card__button${(authorizationStatus !== AuthorizationStatus.Auth) ? ' visually-hidden' : ''}`} to={`${AppRoute.Comments}/${id}`}>Add review</Link>
               </div>
             </div>

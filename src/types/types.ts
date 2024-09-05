@@ -23,3 +23,4 @@ export type Comment = {
 
 export type NewComment = Pick<Comment, 'comment' | 'rating'> & Pick<FilmInfo, 'id'>;
 
+export type FavoriteAuth = Pick<FilmInfo, 'id'> & { status: 1 | 0 };

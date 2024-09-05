@@ -8,7 +8,7 @@ import { History } from 'history';
 import { AuthorizationStatus } from '../const';
 //import { State, AppDispatch } from '../types/state';
 import { HttpCode } from '../const';
-import { Comment, NewComment } from '../types/types';
+import { Comment, NewComment, FavoriteAuth } from '../types/types';
 
 type Extra = {
   api: AxiosInstance;
@@ -27,7 +27,10 @@ const Action = {
   REQUIRE_AUTHORIZATION: 'user/requireAuthorization',
   FETCH_COMMENTS: 'film/fetch-comments',
   SIMILAR_FILMS: 'films/similar',
-  POST_COMMENT: 'user/post-comment'
+  POST_COMMENT: 'user/post-comment',
+  FETCH_PROMO_FILM: 'film/get-promo-film',
+  FETCH_FAVORITE_FILMS: 'films/fetch-favorite',
+  POST_FAVORITE_FILMS: 'films/post-favorite',
 };
 
 export const requireAuthorization = createAction<AuthorizationStatus>(Action.REQUIRE_AUTHORIZATION);
@@ -108,5 +111,41 @@ export const postReview = createAsyncThunk<Comment[], NewComment, { extra: Extra
     const { api } = extra;
     const { data } = await api.post<Comment[]>(`${AppRoute.Comments}/${id}`, { comment, rating });
     return data;
+  }
+);
+
+export const fetchPromoFilm = createAsyncThunk<FilmInfo, undefined, { extra: Extra }>(
+  Action.FETCH_PROMO_FILM,
+  async (_, { extra }) => {
+    const { api } = extra;
+    const { data } = await api.get<FilmInfo>('/promo');
+    return data;
+  }
+);
+
+export const fetchFavoriteFilms = createAsyncThunk<FilmInfo[], undefined, { extra: Extra }>(
+  Action.FETCH_FAVORITE_FILMS,
+  async (_, { extra }) => {
+    const { api } = extra;
+    const { data } = await api.get<FilmInfo[]>('/favorite');
+    return data;
+  }
+);
+
+export const postFavoriteFilms = createAsyncThunk<FilmInfo, FavoriteAuth, { extra: Extra }>(
+  Action.POST_FAVORITE_FILMS,
+  async ({ id, status }, { extra }) => {
+    const { api, history } = extra;
+    try {
+      const { data } = await api.post<FilmInfo>(`favorite/${id}/${status}`);
+      return data;
+    } catch (error) {
+      const axiosError = error as AxiosError;
+
+      if (axiosError.response?.status === HttpCode.NotFound) {
+        history.push(AppRoute.Login);
+      }
+      return Promise.reject(error);
+    }
   }
 );

@@ -2,6 +2,7 @@ import store from '../store';
 import type { FilmInfo } from './films';
 import { AuthorizationStatus } from '../const';
 import type { User } from './types';
+import type { Comment } from './types';
 
 export type SiteData = {
   films: FilmInfo[];
@@ -13,6 +14,9 @@ export type SiteData = {
   comments: Comment[];
   similarFilms: FilmInfo[];
   step: number;
+  promoFilm: FilmInfo | null;
+  favoriteFilms: FilmInfo[];
+  isFavoriteLoading: boolean;
 }
 
 export type SiteProcess = {
