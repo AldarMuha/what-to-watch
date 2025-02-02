@@ -26,3 +26,16 @@ export enum StoreSlice {
   SiteProcess = 'SITE_PROCESS',
   UserProcess = 'USER_PROCESS',
 }
+
+export const genres = {
+  'All genres': 'All genres',
+  'Comedies': 'Comedy',
+  'Crime': 'Crime',
+  'Documentary': 'Documentary',
+  'Dramas': 'Drama',
+  'Horror': 'Horror',
+  'Kids & Family': 'Kids & Family',
+  'Romance': 'Romance',
+  'Sci-Fi': 'Sci-Fi',
+  'Thrillers': 'Thriller',
+};

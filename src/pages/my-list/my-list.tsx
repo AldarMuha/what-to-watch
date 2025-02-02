@@ -1,16 +1,11 @@
 import Card from '../../components/card/card';
 import { useAppSelector } from '../../hooks';
-import Spinner from '../../components/spinner/spinner';
-import { getFavoritesFilms, getIsFavoriteLoading } from '../../store/site-data/selectors';
+import { getFavoritesFilms } from '../../store/site-data/selectors';
 import Logo from '../../components/logo/logo';
 import UserBlock from '../../components/user-block/user-block';
 
 function MyList(): JSX.Element {
   const films = useAppSelector(getFavoritesFilms);
-  const isFavoriteLoading = useAppSelector(getIsFavoriteLoading);
-  if (isFavoriteLoading) {
-    return <Spinner />;
-  }
   return (
     <div className="user-page">
       <header className="age-header user-page__head">
@@ -39,5 +34,6 @@ function MyList(): JSX.Element {
     </div>
   );
 }
+
 
 export default MyList;

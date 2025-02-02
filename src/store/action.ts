@@ -23,6 +23,7 @@ const Action = {
   FETCH_FILMS: 'films/fetch',
   FETCH_FILM: 'film/fetch',
   LOGIN_USER: 'user/login',
+  LOGOUT_USER: 'user/logout',
   FETCH_USER_STATUS: 'user/fetch/status',
   REQUIRE_AUTHORIZATION: 'user/requireAuthorization',
   FETCH_COMMENTS: 'film/fetch-comments',
@@ -49,12 +50,12 @@ export const fetchFilms = createAsyncThunk<FilmInfo[], undefined, { extra: Extra
   }
 );
 
-export const fetchUserStatus = createAsyncThunk<User, undefined, { extra: Extra }>(
+export const fetchUserStatus = createAsyncThunk<UserAuth['email'], undefined, { extra: Extra }>(
   Action.FETCH_USER_STATUS,
   async (_, { extra }) => {
     const { api } = extra;
     const { data } = await api.get<User>(AppRoute.Login);
-    return data;
+    return data.email;
   }
 );
 
@@ -69,6 +70,15 @@ export const loginUser = createAsyncThunk<UserAuth['email'], UserAuth, { extra: 
     history.back();
     return email;
   });
+
+export const logoutUser = createAsyncThunk<void, undefined, { extra: Extra }>(
+  Action.LOGOUT_USER,
+  async (_, { extra }) => {
+    const { api } = extra;
+    await api.delete(AppRoute.Logout);
+    Token.drop();
+  }
+);
 
 export const fetchFilm = createAsyncThunk<FilmInfo, FilmInfo['id'], { extra: Extra }>(
   Action.FETCH_FILM,

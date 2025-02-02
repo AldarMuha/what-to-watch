@@ -59,7 +59,7 @@ function Film(): JSX.Element | null {
               <h2 className="film-card__title">{film.name}</h2>
               <p className="film-card__meta">
                 <span className="film-card__genre">{film.genre}</span>
-                <span className="film-card__year">{film.relased}</span>
+                <span className="film-card__year">{film.released}</span>
               </p>
               <div className="film-card__buttons">
                 <button className="btn btn--play film-card__button" type="button" onClick={() => navigate(`${AppRoute.Player}/${id}`)}>
@@ -68,7 +68,7 @@ function Film(): JSX.Element | null {
                   </svg>
                   <span>Play</span>
                 </button>
-                <ButtonMyList id={id} isActive={isFavorite} />
+                {authorizationStatus === AuthorizationStatus.Auth ? <ButtonMyList id={id} isActive={isFavorite} /> : ''}
                 <Link className={`btn film-card__button${(authorizationStatus !== AuthorizationStatus.Auth) ? ' visually-hidden' : ''}`} to={`${AppRoute.Comments}/${id}`}>Add review</Link>
               </div>
             </div>

@@ -7,7 +7,7 @@ type DetailsProps = {
 }
 
 function Details({ idTab, isActive, film }: DetailsProps): JSX.Element {
-  const { relased, genre, runTime } = film;
+  const { released, genre, runTime } = film;
   return (
     <div className={`film-card__text film-card__row ${(isActive !== idTab) ? 'visually-hidden' : ''}`}>
       <div className="film-card__text-col">
@@ -45,7 +45,7 @@ function Details({ idTab, isActive, film }: DetailsProps): JSX.Element {
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Released</strong>
-          <span className="film-card__details-value">{relased}</span>
+          <span className="film-card__details-value">{released}</span>
         </p>
       </div>
     </div>

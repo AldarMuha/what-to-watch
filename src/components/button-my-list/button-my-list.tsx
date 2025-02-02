@@ -1,6 +1,6 @@
 import { FilmInfo } from '../../types/films';
 import { useAppDispatch } from '../../hooks';
-import { postFavoriteFilms } from '../../store/action';
+import { postFavoriteFilms, fetchFavoriteFilms, fetchPromoFilm } from '../../store/action';
 
 type ButtonMyListProps = {
   id: FilmInfo['id'];
@@ -10,10 +10,12 @@ type ButtonMyListProps = {
 function ButtonMyList({ id, isActive }: ButtonMyListProps): JSX.Element {
   const dispatch = useAppDispatch();
   const handleButtonClick = () => {
+    dispatch(fetchPromoFilm());
     dispatch(postFavoriteFilms({
       id,
       status: isActive ? 0 : 1
     }));
+    dispatch(fetchFavoriteFilms());
   };
   return (
     <button className="btn btn--list film-card__button" type="button" onClick={handleButtonClick}>

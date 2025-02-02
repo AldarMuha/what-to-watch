@@ -14,6 +14,6 @@ export type FilmInfo = {
   starring: [string];
   runTime: number;
   genre: string;
-  relased: number;
+  released: number;
   isFavorite: boolean;
 }
