@@ -6,6 +6,7 @@ import { useAppSelector, useAppDispatch } from '../../hooks';
 import { getFilm, getIsFilmLoading } from '../../store/site-data/selectors';
 import { fetchFilm } from '../../store/action';
 import Spinner from '../../components/spinner/spinner';
+import history from '../../services/history';
 
 function Player(): JSX.Element {
   const params = useParams();
@@ -45,10 +46,13 @@ function Player(): JSX.Element {
       videoRef.current.requestFullscreen();
     }
   };
+  const handleExitClick = () => {
+    history.back();
+  };
   return (
     <div className="player">
-      <video onTimeUpdate={handleTimeUpdate} src={film?.videoLink} className="player__video" poster={film?.posterImage} ref={videoRef} />
-      <button type="button" className="player__exit">
+      <video onTimeUpdate={handleTimeUpdate} src={film?.videoLink} className="player__video" poster={film?.backgroundImage} ref={videoRef} />
+      <button type="button" className="player__exit" onClick={handleExitClick}>
         Exit
       </button>
       <div className="player__controls">

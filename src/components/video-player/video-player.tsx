@@ -15,20 +15,20 @@ function VideoPlayer({ previewVideoLink, previewImage, isPlaying }: VideoPlayerP
     if (videoRef.current === null) {
       return;
     }
+
     const handleLoadedData = () => {
       setIsLoading(false);
     };
     videoRef.current.addEventListener('loadeddata', handleLoadedData);
-    setIsLoading(false);
-    if (isPlaying) {
-      if (!isLoading) {
-        videoRef.current.play();
-      }
+
+    if (isPlaying && !isLoading) {
+      videoRef.current.play();
     } else {
+      setIsLoading(true);
       videoRef.current.load();
       videoRef.current.pause();
     }
-    return videoRef.current.removeEventListener('loadeddata', handleLoadedData);
+    //videoRef.current.removeEventListener('loadeddata', handleLoadedData);
   }, [isPlaying, isLoading]);
 
   return (
