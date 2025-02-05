@@ -1,4 +1,4 @@
-import { unstable_HistoryRouter as HistoryRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Main from '../../pages/main/main';
 import SignIn from '../../pages/sign-in/sign-in';
@@ -8,11 +8,10 @@ import Film from '../../pages/film/film';
 import AddReview from '../../pages/add-review/add-review';
 import NotFound from '../../pages/not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
-import history from '../../services/history';
 
 function App(): JSX.Element {
   return (
-    <HistoryRouter history={history}>
+    <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Root} element={<Main />} />
         <Route path={AppRoute.Login} element={<SignIn />} />
@@ -29,7 +28,7 @@ function App(): JSX.Element {
 
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </HistoryRouter>
+    </BrowserRouter>
   );
 }
 
